@@ -2,7 +2,9 @@ import { test, expect } from '@playwright/test'
 import { MyCartVerification } from '../pages/CartPage1'
 import { LoginCombine } from '../pages/Login_Combine'
 import { Configuration } from '../utils/config'
-import { CheckoutCases } from '../pages/CheckoutPage'
+import { CheckoutCasesTwo } from '../pages/CheckOutTwo'
+
+
 
 
 let config = new Configuration()
@@ -12,7 +14,7 @@ test.beforeEach(async ({ page }) => {
     await page.goto(config.appURL)
 })
 
-test.afterAll(async ({ page }) => {
+test.afterEach(async ({ page }) => {
     await page.close()
 })
 
@@ -30,11 +32,14 @@ test('Checkout without terms', async ({ page }, testInfo) => {
     await cart.Click_AddTOCart()
     await cart.ShoppingCartView()
 
-    let checkout = new CheckoutCases(page)
-    await checkout.click_CheckBox()
-    await checkout.click_CheckOutButton()
-    await page.waitForTimeout(3000)
-})
+    let checkoutTwo=new CheckoutCasesTwo(page)
+    await checkoutTwo.click_CheckOutButton()
+   
+    
+
+    
+    
+});
 
 test('Checkout with terms', async ({ page }, testInfo) => {
 
@@ -50,16 +55,17 @@ test('Checkout with terms', async ({ page }, testInfo) => {
     await cart.Click_AddTOCart()
     await cart.ShoppingCartView()
 
-    let checkout = new CheckoutCases(page)
-    await checkout.click_CheckBox()
-
-    await checkout.click_CheckOutButton()
-    await checkout.VerifyTermsCheckBox()
-
-    await checkout.VerifyPaymentMethod("paymentmethod_3")
-    await checkout.VerifyPONumber("111")
-    await checkout.VerifyTotal('24')
-
-
-   // await page.waitForTimeout(4000)
+    let checkoutTwo=new CheckoutCasesTwo(page)
+    await checkoutTwo.VerifyTermsCheckBox()
+   
+    await checkoutTwo.click_CheckOutButton()
+    await checkoutTwo.Click_ContinueOne()
+    await checkoutTwo.SelectPickUP()
+    await checkoutTwo.Click_Continue2()
+    await checkoutTwo.SelectPaymentMethod()
+    await checkoutTwo.Click_Continue3()
+    await checkoutTwo.VerifyPO("Test33")
+    await checkoutTwo.Click_Continue4()
+    await checkoutTwo.VerifyTotal()
+    
 })

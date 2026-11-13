@@ -11,7 +11,7 @@ test.beforeEach(async ({ page }) => {
     await page.goto(config.appURL)
 })
 
-test.afterAll(async ({ page }) => {
+test.afterEach(async ({ page }) => {
     await page.close()
 })
 
@@ -33,7 +33,5 @@ test('Verify product prices',async({page},testInfo)=>{
     console.log('Test title=>',testInfo.title)
     let advanced=new Advanced_Scenarious(page)
     await advanced.mylink()
-   
-
     
 })

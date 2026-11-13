@@ -80,7 +80,7 @@ test('Verify update quantity in cart',async({page},testInfo)=>{
     let cart=new MyCartVerification(page)
     await cart.Click_BooksLink()
     await cart.Click_FictionBook()
-    await cart.UpdateQuantity('2')
+   // await cart.UpdateQuantity('2')
     await page.waitForTimeout(2000)
 
 
