@@ -11,7 +11,7 @@ test.beforeEach(async({page})=>{
     await page.goto(config.appURL)
 })
 
-test.afterAll(async({page})=>{
+test.afterEach(async({page})=>{
     await page.close()
 })
 
