@@ -73,7 +73,7 @@ export class MyCart
     
     async cart_CheckBox1()
     {
-        await this.checkbox1.click()
+        await this.checkbox1.first().click()
     }
 
        async cart_CheckBox2()
