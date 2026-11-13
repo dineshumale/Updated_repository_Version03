@@ -1,19 +1,17 @@
-name: Playwright Tests
+name: Playwright Automation Tests
 
 on:
   push:
-    branches:  [master]
+    branches: [master]
 
   pull_request:
-    branches:  [master]
+    branches: [master]
+
+  workflow_dispatch:
 
 jobs:
   test:
     runs-on: ubuntu-latest
-
-    env:
-      TEST_USERNAME: ${{ secrets.TEST_USERNAME }}
-      TEST_PASSWORD: ${{ secrets.TEST_PASSWORD }}
 
     steps:
       - name: Checkout repository
@@ -30,10 +28,30 @@ jobs:
       - name: Install Playwright browsers
         run: npx playwright install --with-deps
 
+      - name: Verify environment variables
+        env:
+          TEST_USERNAME: ${{ secrets.TEST_USERNAME }}
+          TEST_PASSWORD: ${{ secrets.TEST_PASSWORD }}
+        run: |
+          if [ -n "$TEST_USERNAME" ]; then
+            echo "TEST_USERNAME is available"
+          else
+            echo "TEST_USERNAME is missing"
+          fi
+
+          if [ -n "$TEST_PASSWORD" ]; then
+            echo "TEST_PASSWORD is available"
+          else
+            echo "TEST_PASSWORD is missing"
+          fi
+
       - name: Run Playwright tests
+        env:
+          TEST_USERNAME: ${{ secrets.TEST_USERNAME }}
+          TEST_PASSWORD: ${{ secrets.TEST_PASSWORD }}
         run: npx playwright test
 
-        # Upload HTML Report
+      # Upload HTML Report
       - name: Upload Playwright HTML Report
         if: always()
         uses: actions/upload-artifact@v4
