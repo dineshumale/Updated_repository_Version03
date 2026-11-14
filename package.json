@@ -6,9 +6,9 @@
   "scripts": {
 
     "test": "npx playwright test",
-    "sanity": "npx playwright test --grep @sanity --headed",
-    "regression": "npx playwright test --grep @regression --headed",
-    "regression-only": "npx playwright test --grep @regression --grep-invert @sanity --headed",
+    "sanity": "npx playwright test --grep @sanity",
+    "regression": "npx playwright test --grep @regression",
+    "regression-only": "npx playwright test --grep @regression --grep-invert @sanity",
     "report": "npx playwright show-report"
   },
   "keywords": [],
