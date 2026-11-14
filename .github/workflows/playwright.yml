@@ -1,4 +1,4 @@
-name: Playwright Automation Tests
+name: Playwright Automation
 
 on:
   push:
@@ -10,7 +10,9 @@ on:
   workflow_dispatch:
 
 jobs:
-  test:
+
+  sanity-tests:
+    name: Sanity Test Execution
     runs-on: ubuntu-latest
 
     steps:
@@ -21,42 +23,58 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 24
+          cache: npm
 
       - name: Install dependencies
         run: npm ci
 
       - name: Install Playwright browsers
-        run: npx playwright install --with-deps
+        run: npx playwright install --with-deps chromium
 
-      - name: Verify environment variables
+      - name: Execute Sanity Tests
+        run: npm run sanity
         env:
           TEST_USERNAME: ${{ secrets.TEST_USERNAME }}
           TEST_PASSWORD: ${{ secrets.TEST_PASSWORD }}
-        run: |
-          if [ -n "$TEST_USERNAME" ]; then
-            echo "TEST_USERNAME is available"
-          else
-            echo "TEST_USERNAME is missing"
-          fi
 
-          if [ -n "$TEST_PASSWORD" ]; then
-            echo "TEST_PASSWORD is available"
-          else
-            echo "TEST_PASSWORD is missing"
-          fi
-
-      - name: Run Playwright tests
-        env:
-          TEST_USERNAME: ${{ secrets.TEST_USERNAME }}
-          TEST_PASSWORD: ${{ secrets.TEST_PASSWORD }}
-        run: npx playwright test
-
-      # Upload HTML Report
-      - name: Upload Playwright HTML Report
+      - name: Upload Sanity Report
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: playwright-html-report
+          name: sanity-playwright-report
           path: playwright-report/
-          retention-days: 30
-          if-no-files-found: ignore
+          retention-days: 15
+
+  regression-tests:
+    name: Regression Test Execution
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium
+
+      - name: Execute Regression Tests
+        run: npm run regression
+        env:
+          TEST_USERNAME: ${{ secrets.TEST_USERNAME }}
+          TEST_PASSWORD: ${{ secrets.TEST_PASSWORD }}
+
+      - name: Upload Regression Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: regression-playwright-report
+          path: playwright-report/
+          retention-days: 15git add .

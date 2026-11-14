@@ -11,7 +11,7 @@ test.afterEach(async({page})=>{
     await page.close()
 })
 
-test('Search cases',async({page})=>{
+test('Search cases @sanity',async({page})=>{
 
     let search=new SearchProducts(page)
     await search.Search_text()

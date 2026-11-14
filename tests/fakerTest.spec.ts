@@ -15,7 +15,7 @@ test.afterEach(async({page})=>{
 
 
 
-test("Faker Test",async({page})=>{
+test("Faker Login Test @sanity",async({page})=>{
     let faker=new fakerTest(page)
     await faker.Click_RegisterLink()
     await faker.fakerInput()

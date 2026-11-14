@@ -12,7 +12,7 @@ test.afterEach(async({page})=>{
     await page.close()
 })
 
-test('wishlist cases',async({page})=>{
+test('wishlist cases @regression',async({page})=>{
 
     let wish=new WishList(page)
     await wish.Click_digitalLink()

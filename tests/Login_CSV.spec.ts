@@ -8,7 +8,7 @@ let config=new Configuration()
 for(const data of loginData)
 {
 
-    test(`login test-${data.email}`,async({page})=>{
+    test(`login test-${data.email} @sanity`,async({page})=>{
         await page.goto(config.appURL)
         await page.getByRole('link',{name:'Log in'}).click()
         await page.locator('#Email').fill(data.email)

@@ -16,7 +16,7 @@ test.afterEach(async ({ page }) => {
 })
 
 
-test('Different links Handling',async({page},testInfo)=>{
+test('Different links Handling @regression',async({page},testInfo)=>{
 
     console.log('Test title=>',testInfo.title)
     await page.getByRole('link',{name:'Sitemap'}).click()

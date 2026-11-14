@@ -17,7 +17,7 @@ test.afterEach(async({page})=>{
     await page.close()
 })
 
-test('Login Page',async({page})=>{
+test('Login Page @sanity',async({page})=>{
 
     //await page.goto(config_obj.appURL);
     await LoginPage_obj.click_Login_Link();

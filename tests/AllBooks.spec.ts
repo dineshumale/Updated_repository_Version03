@@ -12,7 +12,7 @@ test.afterEach(async({page})=>{
     await page.close()
 })
 
-test('Book prices and heading',async({page})=>{
+test('Book prices and heading @regression',async({page})=>{
 
     let books=new BookDetails(page)
     await books.Click_BookLink()
