@@ -35,6 +35,7 @@ reporter: [
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     screenshot: 'only-on-failure',
+      headless: !!process.env.CI,
     trace: 'retain-on-failure',
   },
 
